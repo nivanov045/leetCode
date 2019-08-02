@@ -4,11 +4,68 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <sstream>
 
 class Solution {
 public:
   int romanToInt(std::string s) {
-
+    std::stringstream ss(s);
+    char curSymb;
+    char nextSymb;
+    int result = 0;
+    while (ss.get(curSymb)) {
+      switch (curSymb)
+      {
+      case 'I':
+        if (!ss.peek()) {
+          result += 1;
+          return result;
+        }
+        nextSymb = ss.peek();
+        if (nextSymb == 'V' || nextSymb == 'X')
+          result -= 1;
+        else
+          result += 1;
+        break;
+      case 'V':
+        result += 5;
+        break;
+      case 'X':
+        if (!ss.peek()) {
+          result += 1;
+          return result;
+        }
+        nextSymb = ss.peek();
+        if (nextSymb == 'L' || nextSymb == 'C')
+          result -= 10;
+        else
+          result += 10;
+        break;
+      case 'L':
+        result += 50;
+        break;
+      case 'C':
+        if (!ss.peek()) {
+          result += 1;
+          return result;
+        }
+        nextSymb = ss.peek();
+        if (nextSymb == 'D' || nextSymb == 'M')
+          result -= 100;
+        else
+          result += 100;
+        break;
+      case 'D':
+        result += 500;
+        break;
+      case 'M':
+        result += 1000;
+        break;
+      default:
+        break;
+      }
+    }
+    return result;
   }
 };
 
