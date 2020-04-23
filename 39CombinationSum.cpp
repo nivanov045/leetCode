@@ -11,9 +11,14 @@ public:
     if (_storage.count(target))
       return(_storage[target]);
     vector<vector<int>> result;
-    for (auto candidate : candidates) {
+    if (!_sorted) {
+      sort(candidates.begin(), candidates.end());
+      _sorted = true;
+    }
+    for (int i = 0; i < candidates.size(); ++i) {
+      auto candidate = candidates[i];
       if (candidate > target)
-        continue;
+        break;
       if (candidate == target) {
         result.push_back({candidate});
         continue;
@@ -32,6 +37,7 @@ public:
   }
 private:
   unordered_map<int, vector<vector<int>>> _storage;
+  bool _sorted = false;
 };
 
 int main() {
